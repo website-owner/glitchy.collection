@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="qBS_hZl0YKYD3So_D9pTHQpIBtL42LKXgl3u1qqnKUw" />
+<title>Glitchy Collections</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --neon-cyan: rgba(0, 255, 255, 1);
+  --bg-black:#000;
+  --text-color:#fff;
+  --card-bg:rgba(20,20,20,0.65);
+  --grid-opacity: 0.4;
+}
+body.light-mode{
+  --bg-black:#f0faff;
+  --text-color:#000;
+  --card-bg:rgba(255,255,255,0.75);
+  --neon-cyan:rgba(0,180,180,1);
+  --grid-opacity: 0.25;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg-black);
+  color:var(--text-color);
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+}
+
+/* Background Grid */
+.background-grid{
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(var(--neon-cyan) 1.5px, transparent 1.5px),
+    linear-gradient(90deg,var(--neon-cyan) 1.5px, transparent 1.5px);
+  background-size:60px 60px;
+  opacity:var(--grid-opacity);
+  transform:rotateX(50deg) scale(2.5);
+  animation:gridMove 20s linear infinite;
+  z-index:-2;
+  filter: drop-shadow(0 0 2px var(--neon-cyan));
+}
+@keyframes gridMove{to{background-position:0 600px}}
+.vignette{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,transparent 20%,var(--bg-black) 110%);
+  z-index:-1;
+}
+
+/* Hero */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-left:35px;
+}
+.header{
+  display:flex;
+  gap:15px;
+  align-items:flex-start;
+}
+.logo{
+  font-family:'Rubik Wet Paint',cursive;
+  font-size:clamp(60px,12vw,110px);
+  line-height:0.85;
+  color:var(--neon-cyan);
+  text-shadow:0 0 15px rgba(0,255,255,.7);
+}
+.controls{display:flex;gap:10px}
+.nav-btn{
+  padding:10px 20px;
+  border:2px solid var(--neon-cyan);
+  background:transparent;
+  color:var(--neon-cyan);
+  font-family:'Rubik Wet Paint',cursive;
+  border-radius:8px;
+  cursor:pointer;
+}
+.nav-btn:hover{
+  background:var(--neon-cyan);
+  color:#000;
+  box-shadow:0 0 20px var(--neon-cyan);
+}
+.scroll-hint{
+  position:absolute;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:'Rubik Wet Paint',cursive;
+  color:var(--neon-cyan);
+}
+
+/* Menu */
+.menu-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  z-index:99;
+}
+.menu-overlay.active{display:block}
+.side-menu{
+  position:fixed;
+  top:0;
+  right:-320px;
+  width:300px;
+  height:100%;
+  background:var(--bg-black);
+  border-left:2px solid var(--neon-cyan);
+  padding:40px 20px;
+  transition:.4s;
+  z-index:100;
+}
+.side-menu.active{right:0}
+.menu-item{
+  display:block;
+  font-family:'Rubik Wet Paint',cursive;
+  color:var(--neon-cyan);
+  text-decoration:none;
+  font-size:1.5rem;
+  padding:12px;
+}
+.menu-item:hover{padding-left:25px;background:rgba(0,255,255,.1)}
+.close-menu{
+  font-size:2rem;
+  cursor:pointer;
+  color:var(--neon-cyan);
+  text-align:right;
+}
+
+/* Content */
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:100px 20px;
+}
+.card{
+  background:var(--card-bg);
+  border:2px solid var(--neon-cyan);
+  border-radius:20px;
+  padding:40px;
+  margin-bottom:60px;
+  backdrop-filter:blur(15px);
+  text-align: center;
+}
+.card h2{
+  font-family:'Rubik Wet Paint',cursive;
+  color:var(--neon-cyan);
+  font-size:clamp(2rem,8vw,3.5rem);
+  text-align:center;
+}
+.description{
+  font-size:1.15rem;
+  line-height:1.7;
+  margin-top:30px;
+  text-align: left;
+}
+.order-btn{
+  display:inline-block;
+  margin-top:30px;
+  padding:15px 40px;
+  background:var(--neon-cyan);
+  color:#000;
+  font-family:'Rubik Wet Paint',cursive;
+  font-size:1.6rem;
+  border-radius:12px;
+  text-decoration:none;
+  box-shadow:0 0 20px var(--neon-cyan);
+}
+.order-btn:hover{transform:scale(1.1)}
+
+.subscribe-section {
+  border-top: 1px solid rgba(0,255,255,0.3);
+  margin-top: 40px;
+  padding-top: 40px;
+}
+
+.subscribe-btn {
+  display: inline-block;
+  padding: 15px 45px;
+  background: #4285F4;
+  color: #fff;
+  font-family: 'Rubik Wet Paint', cursive;
+  font-size: 1.8rem;
+  border-radius: 50px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
+  transition: 0.3s;
+}
+
+.subscribe-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(66, 133, 244, 0.6);
+  background: #357ae8;
+}
+
+footer{
+  text-align:center;
+  padding:60px;
+  color:var(--neon-cyan);
+}
+
+.footer-main {
+  font-family: 'Rubik Wet Paint', cursive;
+  opacity: .6;
+  font-size: 1rem;
+}
+
+.footer-sub {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-top: 10px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+  opacity: 1;
+}
+
+.clickable-attribution {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: all 0.2s;
+}
+
+.clickable-attribution:hover {
+  text-shadow: 0 0 15px var(--neon-cyan);
+  filter: brightness(1.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-grid"></div>
+<div class="vignette"></div>
+
+<div class="menu-overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+  <div class="close-menu" id="closeMenu">✕</div>
+  <a class="menu-item" href="#poster-section">Posters</a>
+  <a class="menu-item" href="#sticker-section">Stickers & GIFs</a>
+  <a class="menu-item" href="#contact-section">Contact</a>
+</div>
+
+<section class="hero">
+  <div class="header">
+    <div class="logo">GLITCHY<br>COLLECTIONS</div>
+    <div class="controls">
+      <button class="nav-btn" id="modeBtn">DARK</button>
+      <button class="nav-btn" id="menuBtn">MENU</button>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL DOWN ↓</div>
+</section>
+
+<main class="container">
+
+<section class="card" id="poster-section">
+<h2>Stickable Posters</h2>
+<div class="description">
+<p>Bring your imagination to life with our <strong>premium, custom-made stickable posters</strong>! Whether it’s your favorite anime characters, legendary scenes, movie moments, or any creative idea — we turn it into a powerful poster made just for you.</p>
+<p>Printed in <strong>ultra HD quality</strong> with vibrant colors and <strong>strong stickability</strong>, these posters can be applied on walls, desks, doors, and more.</p>
+</div>
+<a class="order-btn" href="mailto:atlazflair@gmail.com?subject=poster&body=Phone%20no%20%3A%20_____________%0D%0AAddress%20%3A%20_____________">Order Now 🚀</a>
+</section>
+
+<section class="card" id="sticker-section">
+<h2>Stickers & GIFs</h2>
+<div class="description">
+<p>Step into the digital world with our <strong>custom GIFs, digital stickers, and e-gifts</strong>! From anime reactions and character edits to custom name designs — we create smooth, colorful, high-quality digital content.</p>
+<p>Perfect for WhatsApp, Instagram, Snapchat, stories, chats, and gifts.</p>
+</div>
+<a class="order-btn" href="mailto:atlazflair@gmail.com?subject=stickers%20or%20GIFs&body=Phone%20%3A%20____________%0D%0AAddress%20%3A%20____________">Order Now 🚀</a>
+</section>
+
+<section class="card" id="contact-section">
+<h2>Contact</h2>
+<div class="description">
+<p><strong>Email:</strong> atlazflair@gmail.com</p>
+<p><strong>Instagram:</strong> @glitchycollections</p>
+<p><strong>Phone:</strong> 9961886606</p>
+</div>
+</section>
+
+<!-- SUBSCRIBE SECTION -->
+<section class="card">
+  <h2>Support the Collection</h2>
+  <div class="description" style="text-align: center;">
+    <p>Enjoying our custom work? Subscribe to support our creators and get exclusive updates on new drops!</p>
+    <div class="subscribe-section">
+      <button onclick="openPaymentInfo()" class="subscribe-btn">Subscribe via G-Pay 💳</button>
+      <p style="margin-top: 15px; font-size: 0.9rem; opacity: 0.8;">Payment Number: 9961 88 6606</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-main">© 2026 GLITCHY COLLECTIONS — SYSTEM OPERATIONAL</div>
+  <div class="footer-sub">by <span class="clickable-attribution" onclick="openCreatorInfo()">glitchy-websites</span></div>
+</footer>
+
+<script>
+const menuBtn=document.getElementById("menuBtn");
+const closeMenu=document.getElementById("closeMenu");
+const sideMenu=document.getElementById("sideMenu");
+const overlay=document.getElementById("overlay");
+const modeBtn=document.getElementById("modeBtn");
+
+menuBtn.onclick=()=>{sideMenu.classList.add("active");overlay.classList.add("active")}
+closeMenu.onclick=overlay.onclick=()=>{sideMenu.classList.remove("active");overlay.classList.remove("active")}
+modeBtn.onclick=()=>{document.body.classList.toggle("light-mode")}
+
+document.querySelectorAll('.menu-item').forEach(item => {
+  item.onclick = () => {
+    sideMenu.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+});
+
+function openPaymentInfo() {
+  const payWindow = window.open("", "_blank");
+  payWindow.document.write(`
+    <html>
+      <head>
+        <title>Support Glitchy Collections</title>
+        <style>
+          body { 
+            background: #000; 
+            color: #00ffff; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            text-align: center;
+          }
+          .container { 
+            border: 3px solid #00ffff; 
+            padding: 40px; 
+            border-radius: 30px; 
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+            max-width: 500px;
+          }
+          h1 { color: #fff; font-size: 2.5rem; margin-bottom: 20px; }
+          .number { 
+            font-size: 3rem; 
+            font-weight: 900; 
+            color: #fff; 
+            background: rgba(0, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 20px 0;
+            letter-spacing: 2px;
+          }
+          p { font-size: 1.4rem; line-height: 1.6; }
+          .heart { color: #ff0055; font-size: 2rem; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Support Us</h1>
+          <p>Support our work by sending your contribution to this number via G-Pay:</p>
+          <div class="number">9961 88 6606</div>
+          <p>Your support helps us keep the glitch alive! <br><span class="heart">❤</span></p>
+        </div>
+      </body>
+    </html>
+  `);
+}
+
+function openCreatorInfo() {
+  const infoWindow = window.open("", "_blank");
+  infoWindow.document.write(`
+    <html>
+      <head>
+        <title>Glitchy Websites Info</title>
+        <style>
+          body { 
+            background: #000; 
+            color: #00ffff; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            text-align: center;
+          }
+          .container { 
+            border: 2px solid #00ffff; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 0 20px #00ffff;
+            max-width: 400px;
+          }
+          h1 { margin-bottom: 20px; font-size: 2rem; }
+          p { font-size: 1.2rem; line-height: 1.6; }
+          a { color: #fff; text-decoration: none; font-weight: bold; }
+          .highlight { color: #fff; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Glitchy Websites</h1>
+          <p>This website is made by <span class="highlight">glitchy-websites</span></p>
+          <p>For contact <span class="highlight">Gmail:</span><br>
+          <a href="mailto:sudarsanpalliyath011@gmail.com">sudarsanpalliyath011@gmail.com</a></p>
+        </div>
+      </body>
+    </html>
+  `);
+}
+</script>
+
+</body>
+</html>
